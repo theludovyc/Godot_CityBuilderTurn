@@ -1,0 +1,38 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Reference",
+"class": "Building",
+"language": "GDScript",
+"path": "res://Script/Building.gd"
+}, {
+"base": "Building",
+"class": "Factory",
+"language": "GDScript",
+"path": "res://Script/Factory.gd"
+} ]
+_global_script_class_icons={
+"Building": "",
+"Factory": ""
+}
+
+[application]
+
+config/name="CityBuilderTurn"
+config/icon="res://icon.png"
+
+[display]
+
+window/size/height=768
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"
