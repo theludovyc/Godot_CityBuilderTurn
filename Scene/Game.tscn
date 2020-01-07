@@ -6,10 +6,10 @@
 script = ExtResource( 1 )
 
 [node name="Hbox_Nou" type="HBoxContainer" parent="."]
-margin_left = 47.5001
-margin_top = 35.15
-margin_right = 200.5
-margin_bottom = 75.15
+margin_left = 714.318
+margin_top = 323.551
+margin_right = 867.318
+margin_bottom = 363.551
 __meta__ = {
 "_edit_group_": true
 }
@@ -42,10 +42,10 @@ margin_bottom = 27.0
 text = "0"
 
 [node name="Hbox_Hab" type="HBoxContainer" parent="."]
-margin_left = 87.4
-margin_top = 105.45
-margin_right = 188.4
-margin_bottom = 145.45
+margin_left = 75.1648
+margin_top = 25.9212
+margin_right = 176.165
+margin_bottom = 65.9212
 __meta__ = {
 "_edit_group_": true
 }
@@ -63,18 +63,27 @@ margin_right = 89.0
 margin_bottom = 27.0
 text = "0"
 
-[node name="Lit" type="Label" parent="Hbox_Hab"]
+[node name="HabAdd" type="Label" parent="Hbox_Hab"]
 margin_left = 93.0
 margin_top = 13.0
 margin_right = 101.0
 margin_bottom = 27.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "0"
+
+[node name="HabMax" type="Label" parent="Hbox_Hab"]
+margin_left = 105.0
+margin_top = 13.0
+margin_right = 113.0
+margin_bottom = 27.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "0"
 
 [node name="NouvTour" type="Button" parent="."]
-margin_left = 336.3
-margin_top = 76.0
-margin_right = 348.3
-margin_bottom = 96.0
+margin_left = 493.61
+margin_top = 33.1768
+margin_right = 593.61
+margin_bottom = 53.1768
 text = "Nouveau Tour"
 
 [node name="ItemList" type="ItemList" parent="."]
@@ -114,8 +123,26 @@ margin_left = 509.425
 margin_top = 279.029
 margin_right = 574.425
 margin_bottom = 299.029
-rect_pivot_offset = Vector2( 32.9998, 9.00024 )
+rect_pivot_offset = Vector2( -359.425, 107.273 )
 text = "Détruire"
+
+[node name="BtnHabAdd" type="Button" parent="."]
+margin_left = 47.8098
+margin_top = 74.5505
+margin_right = 112.81
+margin_bottom = 94.5505
+rect_pivot_offset = Vector2( 34.1303, 10.0531 )
+text = "Inviter"
+
+[node name="BtnHabRem" type="Button" parent="."]
+margin_left = 141.669
+margin_top = 73.7617
+margin_right = 206.669
+margin_bottom = 93.7617
+rect_pivot_offset = Vector2( 34.1303, 10.0531 )
+text = "Banir"
 [connection signal="button_down" from="NouvTour" to="." method="_on_NouvTour_button_down"]
 [connection signal="button_down" from="BtnAdd" to="." method="_on_BtnAdd_button_down"]
 [connection signal="button_down" from="BtnCel" to="." method="_on_BtnCel_button_down"]
+[connection signal="button_down" from="BtnHabAdd" to="." method="_on_BtnHabAdd_button_down"]
+[connection signal="button_down" from="BtnHabRem" to="." method="_on_BtnHabRem_button_down"]
