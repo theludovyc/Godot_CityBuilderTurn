@@ -18,16 +18,26 @@ _global_script_classes=[ {
 "class": "Factory",
 "language": "GDScript",
 "path": "res://Script/Factory.gd"
+}, {
+"base": "Building",
+"class": "Home",
+"language": "GDScript",
+"path": "res://Script/Home.gd"
 } ]
 _global_script_class_icons={
 "Building": "",
-"Factory": ""
+"Factory": "",
+"Home": ""
 }
 
 [application]
 
 config/name="CityBuilderTurn"
 config/icon="res://icon.png"
+
+[autoload]
+
+MG="*res://Script/MG.gd"
 
 [display]
 

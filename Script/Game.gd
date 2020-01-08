@@ -4,35 +4,23 @@ extends Node
 # var a = 2
 # var b = "text"
 
-var nouTot=100
-
-var hab = 3
-var habAdd = 0
-var habMax = 3
-
-var resources = ["Nourriture"]
-
-var buildings = []
-
 var build_adds:Dictionary
 
 var build_ups:Dictionary
 
+var habAdd = 0
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$Hbox_Nou/NouTot.text = str(nouTot)
+	$Hbox_Nou/NouTot.text = str(MG.nouTot)
 	
-	$Hbox_Hab/Hab.text = str(hab)
-	$Hbox_Hab/HabMax.text = str(habMax)
+	$Hbox_Hab/Hab.text = str(MG.hab)
+	$Hbox_Hab/HabMax.text = str(MG.habMax)
 	
-	buildings.push_back(Building.new("Hutte") )
+	build_ups[MG.buildings[0].name]=[0, 1]
+	$ItemList3.add_item(MG.buildings[0].name + " x1")
 	
-	build_ups[buildings[0].name]=[0, 1]
-	$ItemList3.add_item(buildings[0].name + " x1")
-	
-	buildings.push_back(Building.new("Ferme") )
-	
-	for building in buildings:
+	for building in MG.buildings:
 		$ItemList.add_item(building.name)
 	
 	pass # Replace with function body.
@@ -56,17 +44,17 @@ func resetHabAdd():
 			return
 
 func _on_NouvTour_button_down():
-	nouTot -= 3*hab
+	MG.eat()
 	
-	$Hbox_Nou/NouTot.text = str(nouTot)
+	$Hbox_Nou/NouTot.text = str(MG.nouTot)
 	
-	hab += habAdd
+	MG.dwell_add(habAdd)
 	
 	habAdd=0
 	
 	resetHabAdd()
 	
-	$Hbox_Hab/Hab.text = str(hab)
+	$Hbox_Hab/Hab.text = str(MG.hab)
 	
 	$ItemList2.clear()
 	
@@ -86,7 +74,7 @@ func _on_NouvTour_button_down():
 
 func _on_BtnAdd_button_down():
 	var index = $ItemList.get_selected_items()[0]
-	var key = buildings[index].name
+	var key = MG.buildings[index].name
 	
 	if build_adds.has(key):
 		build_adds[key][1] += 1
@@ -102,7 +90,7 @@ func _on_BtnAdd_button_down():
 
 func _on_BtnCel_button_down():
 	var index = $ItemList.get_selected_items()[0]
-	var key = buildings[index].name
+	var key = MG.buildings[index].name
 	
 	if build_adds[key][1] == 1:
 		$ItemList2.remove_item(build_adds[key][0])
@@ -115,14 +103,14 @@ func _on_BtnCel_button_down():
 	pass # Replace with function body.
 
 func _on_BtnHabAdd_button_down():
-	if habAdd < (habMax-hab):
+	if habAdd < MG.dwell_free():
 		habAdd += 1
 		resetHabAdd()
 	pass # Replace with function body.
 
 
 func _on_BtnHabRem_button_down():
-	if habAdd > -hab:
+	if habAdd > -MG.hab:
 		habAdd -= 1
 		resetHabAdd()
 	pass # Replace with function body.
