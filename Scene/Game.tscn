@@ -86,12 +86,6 @@ margin_right = 593.61
 margin_bottom = 53.1768
 text = "Nouveau Tour"
 
-[node name="ItemList" type="ItemList" parent="."]
-margin_left = 307.0
-margin_top = 131.0
-margin_right = 491.0
-margin_bottom = 244.0
-
 [node name="ItemList2" type="ItemList" parent="."]
 margin_left = 604.492
 margin_top = 130.302
@@ -112,18 +106,10 @@ margin_bottom = 153.383
 text = "Construire"
 
 [node name="BtnCel" type="Button" parent="."]
-margin_left = 801.337
-margin_top = 129.887
-margin_right = 879.337
-margin_bottom = 149.887
-text = "Annuler"
-
-[node name="BtnRem" type="Button" parent="."]
-margin_left = 509.425
-margin_top = 279.029
-margin_right = 574.425
-margin_bottom = 299.029
-rect_pivot_offset = Vector2( -359.425, 107.273 )
+margin_left = 508.792
+margin_top = 165.563
+margin_right = 586.792
+margin_bottom = 185.563
 text = "Détruire"
 
 [node name="BtnHabAdd" type="Button" parent="."]
@@ -141,6 +127,15 @@ margin_right = 206.669
 margin_bottom = 93.7617
 rect_pivot_offset = Vector2( 34.1303, 10.0531 )
 text = "Banir"
+
+[node name="Tree" type="Tree" parent="."]
+margin_left = 198.053
+margin_top = 130.03
+margin_right = 494.053
+margin_bottom = 254.03
+columns = 3
+hide_root = true
+select_mode = 1
 [connection signal="button_down" from="NouvTour" to="." method="_on_NouvTour_button_down"]
 [connection signal="button_down" from="BtnAdd" to="." method="_on_BtnAdd_button_down"]
 [connection signal="button_down" from="BtnCel" to="." method="_on_BtnCel_button_down"]

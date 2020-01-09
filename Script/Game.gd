@@ -4,9 +4,11 @@ extends Node
 # var a = 2
 # var b = "text"
 
+var build_alls:Dictionary
+
 var build_adds:Dictionary
 
-var build_ups:Dictionary
+var build_ups
 
 var habAdd = 0
 
@@ -17,12 +19,34 @@ func _ready():
 	$Hbox_Hab/Hab.text = str(MG.hab)
 	$Hbox_Hab/HabMax.text = str(MG.habMax)
 	
-	build_ups[MG.buildings[0].name]=[0, 1]
-	$ItemList3.add_item(MG.buildings[0].name + " x1")
+#	var root = $Tree.create_item()
+	
+	var prods = $Tree.create_item()
+	prods.set_text(0, "Production")
+	prods.set_selectable(0, false)
+	
+	var homes = $Tree.create_item()
+	homes.set_text(0, "Habitations")
+	homes.set_selectable(0, false)
+	
+	var others = $Tree.create_item()
+	others.set_text(0, "Autres")
+	others.set_selectable(0, false)
 	
 	for building in MG.buildings:
-		$ItemList.add_item(building.name)
-	
+		var b:TreeItem
+
+		match building.type:
+			2:
+				b = $Tree.create_item(homes)
+			_:
+				b = $Tree.create_item(others)
+
+		b.set_text(0, building.name)
+		
+		b.set_text(1, "x0")
+		
+		build_alls[building.name] = [building, b, 0]
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -56,50 +80,75 @@ func _on_NouvTour_button_down():
 	
 	$Hbox_Hab/Hab.text = str(MG.hab)
 	
-	$ItemList2.clear()
-	
 	for key in build_adds:
-		if build_ups.has(key):
-			build_ups[key][1] += build_adds[key][1]
-			
-			$ItemList3.set_item_text(build_ups[key][0], key + " x" + str(build_ups[key][1]) )
-		else:
-			build_ups[key]=[$ItemList3.get_item_count(), build_adds[key][1] ]
-			
-			$ItemList3.add_item(key + " x" + str(build_ups[key][1]) )
-
+		var t = build_alls[key]
+		
+		var i = build_adds[key]
+		
+		t[2] += i
+		
+		t[1].set_text(1, "x" + str(t[2]))
+		
+		t[1].set_text(2, "")
+		
+		t[0].onUp(i)
+		
+		match(t[0].type):
+			2:
+				$Hbox_Hab/HabMax.text = str(MG.habMax)
+		
 	build_adds.clear()
 	
 	pass # Replace with function body.
 
+func resetTreeItem(item:TreeItem, i:int):
+	if i>0:
+		item.set_text(2, "+" + str(i) )
+		item.set_custom_color(2, Color(0, 0.8, 0))
+		return
+	item.set_text(2, str(i) )
+	item.set_custom_color(2, Color(0.8, 0, 0))
+	pass
+
 func _on_BtnAdd_button_down():
-	var index = $ItemList.get_selected_items()[0]
-	var key = MG.buildings[index].name
+	var item = $Tree.get_selected()
+	
+	var key = item.get_text(0)
 	
 	if build_adds.has(key):
-		build_adds[key][1] += 1
+		build_adds[key] += 1
 		
-		$ItemList2.set_item_text(build_adds[key][0], key + " x" + str(build_adds[key][1]) )
+		if build_adds[key] == 0:
+			build_adds.erase(key)
+			
+			item.set_text(2, "")
+			return
 	else:
-		build_adds[key]=[$ItemList2.get_item_count(), 1]
-		
-		$ItemList2.add_item(key + " x1")
+		build_adds[key] = 1
 	
-	pass # Replace with function body.
-
+	resetTreeItem(item, build_adds[key])
+	pass
 
 func _on_BtnCel_button_down():
-	var index = $ItemList.get_selected_items()[0]
-	var key = MG.buildings[index].name
+	var item = $Tree.get_selected()
 	
-	if build_adds[key][1] == 1:
-		$ItemList2.remove_item(build_adds[key][0])
+	var key = item.get_text(0)
+	
+	if build_adds.has(key):
+		if build_adds[key] > -build_alls[key][2]:
+			build_adds[key] -= 1
+			
+			if build_adds[key] == 0:
+				build_adds.erase(key)
+				
+				item.set_text(2, "")
+				return
 		
-		build_adds.erase(key)
-	else:
-		build_adds[key][1] -= 1
+			resetTreeItem(item, build_adds[key])
+	elif build_alls[key][2] > 0:
+		build_adds[key] = -1
 		
-		$ItemList2.set_item_text(build_adds[key][0], key + " x" + str(build_adds[key][1]) )
+		resetTreeItem(item, -1)
 	pass # Replace with function body.
 
 func _on_BtnHabAdd_button_down():

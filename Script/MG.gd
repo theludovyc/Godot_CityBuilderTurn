@@ -19,6 +19,9 @@ func _ready():
 	buildings.push_back(Building.new("Ferme") )
 	pass # Replace with function body.
 	
+func getBuildingName(i:int)->String:
+	return buildings[i].name
+	
 func eat():
 	nouTot -= 3*hab
 	
